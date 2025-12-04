@@ -30,6 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  provider: ^6.0.0      # Para la arquitectura MVVM
+  sqflite: ^2.0.0+4     # Para la Base de Datos (Persistencia)
+  path: ^1.8.0          # Ayuda a encontrar la ruta de la BD
+  intl: ^0.18.0         # Para fechas
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
