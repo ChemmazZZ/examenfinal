@@ -1,30 +1,20 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:bitacora_enfoque/main.dart';
+import 'package:bitacora_enfoque/main.dart'; // Asegúrate que este import coincida con el nombre de tu proyecto en pubspec.yaml
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('La app carga correctamente y muestra el titulo', (WidgetTester tester) async {
+    // 1. Construimos la app (BitacoraApp) y esperamos a que cargue el primer frame
+    await tester.pumpWidget(const BitacoraApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // 2. Verificamos que aparezca el título de la AppBar
+    // "find.text" busca widgets que contengan ese String exacto
+    expect(find.text('Bitácora de Enfoque'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // 3. Verificamos que aparezca el botón de "Iniciar"
+    // Esto confirma que la pantalla HomeScreen cargó bien
+    expect(find.text('Iniciar'), findsOneWidget);
 
-    // Verify that our counter has incremented.
+    // 4. Verificamos que NO aparezca nada del contador viejo (solo por seguridad)
     expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
   });
 }
