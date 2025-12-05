@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart'; // para formatear la fecha
+import 'package:intl/intl.dart';
 import '../providers/session_provider.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -14,15 +14,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   void initState() {
     super.initState();
-    // apenas carga la pantalla, le decimos al provider que traiga los datos de la BD
-    // usamos future.microtask para evitar errores de renderizado
-    Future.microtask(() =>
-        Provider.of<SessionProvider>(context, listen: false).loadSessions());
+    // SOLUCIÓN: Usamos addPostFrameCallback en lugar de microtask.
+    // Esto asegura que el contexto esté listo y el widget montado.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SessionProvider>(context, listen: false).loadSessions();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // escuchamos los cambios en la lista de sesiones
     final sessionProvider = Provider.of<SessionProvider>(context);
 
     return Scaffold(
@@ -35,8 +35,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   itemCount: sessionProvider.sessions.length,
                   itemBuilder: (context, index) {
                     final session = sessionProvider.sessions[index];
-                    
-                    // formateo la fecha que viene como texto
                     final date = DateTime.parse(session.date);
                     final formattedDate = DateFormat('dd/MM/yyyy HH:mm').format(date);
 
