@@ -49,20 +49,11 @@ El proyecto usa el patrón **MVVM** y principios de **Clean Architecture** para 
 ### 📂 Estructura de Carpetas
 
 lib/
-├── data/
-│   └── db_helper.dart
-├── models/
-│   └── session.dart
-├── providers/
-│   ├── timer_provider.dart
-│   └── session_provider.dart
-├── screens/
-│   ├── home_screen.dart
-│   ├── history_screen.dart
-│   ├── statistics_screen.dart
-│   └── finish_session_dialog.dart
-└── widgets/
-    └── custom_button.dart
+data/ db_helper.dart
+models/ session.dart
+providers/ timer_provider.dart session_provider.dart
+screens/ home_screen.dart history_screen.dart statistics_screen.dart finish_session_dialog.dart
+widgets/ custom_button.dart
 
 ---
 
