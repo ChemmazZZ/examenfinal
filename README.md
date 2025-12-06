@@ -1,191 +1,89 @@
-🍅 Bitácora de Enfoque
+# 📘 Bitácora de Enfoque  
+Aplicación móvil Flutter para la gestión de tiempo y productividad académica.
 
-ESTADO DEL PROYECTO: Finalizado (v1.0.0)
-PLATAFORMA: Android
-FRAMEWORK: Flutter (Dart)
+## 📄 Descripción General
 
-1. Información del Estudiante
+**Bitácora de Enfoque** es una aplicación móvil desarrollada en **Flutter** bajo la arquitectura **Offline-First**, diseñada para ayudar a estudiantes a medir, registrar y analizar su tiempo real de estudio. Combina un temporizador tipo **Pomodoro**, un sistema de persistencia local con **SQLite** y un dashboard estadístico que permite visualizar patrones de productividad.
 
-Campo
+La app funciona completamente **sin conexión a internet**, ofreciendo control total sobre las sesiones registradas.
 
-Detalle
+---
 
-Nombre
+## 🎯 Problema que Resuelve
 
-José Maria Mamani Zuñiga
+En el entorno universitario es común confundir *estar ocupado* con *ser productivo*.  
+Los estudiantes suelen no tener métricas claras del tiempo real dedicado al estudio, lo que afecta su rendimiento académico.
 
-Curso
+**Bitácora de Enfoque** ofrece una solución práctica para medir, registrar y analizar ese tiempo de manera verificable.
 
-Programación para Dispositivos Móviles
+---
 
-Semestre
+## 🚀 Funcionalidades Principales
 
-Sexto Semestre
+### ⏱️ 1. Módulo de Temporizador (Pomodoro)
+- Diseño minimalista con progreso circular.  
+- Manejo de estados: **Running**, **Paused**, **Stopped**.  
+- Retroalimentación visual inmediata.
 
-Docente
+### 💾 2. Módulo de Persistencia (SQLite)
+- Registro automático de cada sesión al finalizar.  
+- Formulario editable para ajustar la duración real.  
+- Base de datos local mediante **sqflite**.
 
-Josue Miguel Flores Parra
+### 📜 3. Historial (Bitácora)
+- Lista cronológica (**LIFO**) de sesiones.  
+- Muestra: descripción, fecha formateada y duración.  
+- Construida con **ListView**.
 
-Fecha de Entrega
+### 📊 4. Dashboard Estadístico
+- Gráficos con **fl_chart**.  
+- Agrupación semanal de datos.  
+- Muestra minutos de enfoque por día (Lun–Dom).
 
-06 de Diciembre del 2025
+---
 
-Examen
+## 🏛️ Arquitectura de Software
 
-Examen Final 2025-2
+El proyecto usa el patrón **MVVM** y principios de **Clean Architecture** para un código modular y escalable.
 
-2. Descripción del Proyecto
-
-PROBLEMA A RESOLVER
-
-La procrastinación académica y la falta de gestión del tiempo afectan el rendimiento de los estudiantes universitarios. A menudo, se estudia sin medir el tiempo real de enfoque, lo que genera una falsa sensación de productividad.
-
-PROPUESTA DE VALOR
-
-"Bitácora de Enfoque" es una aplicación móvil diseñada bajo la filosofía "Offline-First". Implementa la técnica Pomodoro para gestionar intervalos de estudio y utiliza una base de datos local (SQLite) para persistir un registro histórico de las sesiones. Esto permite al estudiante auditar su propia productividad sin depender de conexión a internet.
-
-3. Funcionalidades Principales
-
-⏱️ A. Temporizador Pomodoro
-
-Descripción: Módulo principal de gestión de tiempo.
-
-Características:
-
-Indicador visual de progreso circular.
-
-Controles de estado (Iniciar, Pausar, Reiniciar).
-
-Feedback visual inmediato.
-
-💾 B. Registro y Persistencia (SQLite)
-
-Descripción: Sistema de almacenamiento de datos local.
-
-Características:
-
-Formulario emergente automático al finalizar el temporizador.
-
-Edición flexible: Permite al usuario modificar la duración real (minutos) si la sesión fue interrumpida o extendida.
-
-Validación de campos para asegurar la integridad de la base de datos.
-
-📜 C. Historial de Sesiones
-
-Descripción: Bitácora cronológica de actividad.
-
-Características:
-
-Lectura asíncrona desde la base de datos.
-
-Visualización de fecha, descripción de tarea y duración.
-
-Ordenamiento descendente (lo más reciente primero).
-
-📊 D. Dashboard Estadístico (Extra)
-
-Descripción: Análisis de datos y visualización gráfica.
-
-Características:
-
-Implementación de la librería fl_chart.
-
-Algoritmo de agrupación: Procesa los datos crudos para sumarizar la productividad por día de la semana (Lunes a Domingo).
-
-4. Arquitectura de Software
-
-El proyecto sigue estrictamente el patrón de diseño MVVM (Model-View-ViewModel) y los principios de Clean Architecture para garantizar la separación de responsabilidades.
-
-🏛️ Diagrama de Estructura
+### 📂 Estructura de Carpetas
 
 lib/
-├── data/               # CAPA DE DATOS
-│   └── db_helper.dart  # Singleton para gestión de SQLite
-│
-├── models/             # CAPA DE MODELO
-│   └── session.dart    # POJO (Plain Old Java Object) de Sesión
-│
-├── providers/          # CAPA DE VIEWMODEL (Lógica de Negocio)
-│   ├── timer_provider.dart    # Lógica del temporizador y estado
-│   └── session_provider.dart  # Intermediario UI <-> Base de Datos
-│
-├── screens/            # CAPA DE VISTA (UI)
-│   ├── home_screen.dart       # Pantalla principal
-│   ├── history_screen.dart    # Listado de datos
-│   ├── statistics_screen.dart # Gráficos
-│   └── finish_session_dialog.dart # Formulario de captura
-│
-└── widgets/            # COMPONENTES REUTILIZABLES
-    └── custom_button.dart
+├── data/
+│ └── db_helper.dart
+├── models/
+│ └── session.dart
+├── providers/
+│ ├── timer_provider.dart
+│ └── session_provider.dart
+├── screens/
+│ ├── home_screen.dart
+│ ├── history_screen.dart
+│ ├── statistics_screen.dart
+│ └── finish_session_dialog.dart
+└── widgets/
+└── custom_button.dart
 
 
-5. Tecnologías y Librerías
+---
 
-Librería
+## 🧰 Stack Tecnológico
 
-Versión
+| Componente      | Tecnología / Librería | Propósito |
+|----------------|------------------------|-----------|
+| Lenguaje       | Dart 3.0+              | Desarrollo principal |
+| Framework      | Flutter                | UI nativa |
+| Estado         | Provider ^6.0.0        | Gestión e inyección |
+| BD local       | sqflite ^2.0.0         | Persistencia SQLite |
+| Rutas          | path ^1.8.0            | Manejo de archivos |
+| Fechas         | intl ^0.18.0           | Formateo |
+| Gráficos       | fl_chart ^0.66.0       | Dashboard estadístico |
 
-Uso en el Proyecto
+---
 
-flutter
+## 🔧 Instalación y Ejecución
 
-SDK
+1. **Clonar el repositorio**
+```bash
+git clone https://github.com/TU_USUARIO/bitacora_enfoque.git
 
-Framework de desarrollo UI.
-
-provider
-
-^6.0.0
-
-Inyección de dependencias y gestión de estado (MVVM).
-
-sqflite
-
-^2.0.0
-
-Motor de base de datos SQL local.
-
-path
-
-^1.8.0
-
-Utilidad para rutas de sistema de archivos.
-
-intl
-
-^0.18.0
-
-Formateo de fechas y horas.
-
-fl_chart
-
-^0.66.0
-
-Renderizado de gráficos estadísticos.
-
-6. Instrucciones de Instalación
-
-REQUISITOS PREVIOS:
-
-Flutter SDK instalado.
-
-Emulador Android o Dispositivo físico.
-
-PASOS:
-
-Clonar el repositorio:
-
-git clone ()
-
-
-Instalar dependencias:
-
-flutter pub get
-
-
-Ejecutar la aplicación:
-
-flutter run
-
-
-© 2025 José Maria Mamani Zuñiga - Facultad de Ingenierías y Arquitectura
