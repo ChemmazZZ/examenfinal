@@ -48,7 +48,7 @@ El proyecto usa el patrón **MVVM** y principios de **Clean Architecture** para 
 
 ### 📂 Estructura de Carpetas
 
-```plaintext
+```plaintext 
 lib/
 ├── data/
 │   └── db_helper.dart
@@ -64,7 +64,7 @@ lib/
 │   └── finish_session_dialog.dart
 └── widgets/
     └── custom_button.dart
-
+```
 
 ---
 
