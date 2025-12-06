@@ -1,50 +1,76 @@
 # 📘 Bitácora de Enfoque  
-Aplicación móvil Flutter para la gestión de tiempo y productividad académica.
+Aplicación móvil Flutter para la gestión de tiempo, descanso y productividad académica.
 
 ## 📄 Descripción General
 
-**Bitácora de Enfoque** es una aplicación móvil desarrollada en **Flutter** bajo la arquitectura **Offline-First**, diseñada para ayudar a estudiantes a medir, registrar y analizar su tiempo real de estudio. Combina un temporizador tipo **Pomodoro**, un sistema de persistencia local con **SQLite** y un dashboard estadístico que permite visualizar patrones de productividad.
+**Bitácora de Enfoque** es una aplicación móvil desarrollada en **Flutter** bajo la arquitectura **Offline-First** y el patrón **MVVM**, diseñada para ayudar a los estudiantes a mantener un ciclo equilibrado de estudio y descanso basado en la metodología **Pomodoro**.
 
-La app funciona completamente **sin conexión a internet**, ofreciendo control total sobre las sesiones registradas.
+A diferencia de temporizadores convencionales, esta app integra un **ciclo Pomodoro estricto con bloqueo de interfaz**, un sistema de **persistencia local SQLite**, **vibración háptica**, un historial auditable y un **dashboard estadístico semanal**.
+
+La aplicación funciona **sin conexión a internet**, garantizando disponibilidad total en cualquier entorno académico.
 
 ---
 
 ## 🎯 Problema que Resuelve
 
-En el entorno universitario es común confundir *estar ocupado* con *ser productivo*.  
-Los estudiantes suelen no tener métricas claras del tiempo real dedicado al estudio, lo que afecta su rendimiento académico.
+En las universidades es común que los estudiantes:
 
-**Bitácora de Enfoque** ofrece una solución práctica para medir, registrar y analizar ese tiempo de manera verificable.
+- Procrastinen.  
+- Ignoren los descansos necesarios.  
+- Se expongan al *burnout* por estudiar de manera desordenada.  
+- No cuenten con un registro real del tiempo invertido.
+
+Estos problemas reducen el rendimiento cognitivo y la capacidad de concentración.
+
+**Bitácora de Enfoque** propone una solución que regula automáticamente los ciclos de estudio y descanso, evitando el agotamiento y permitiendo llevar un registro verificable del desempeño.
 
 ---
 
 ## 🚀 Funcionalidades Principales
 
-### ⏱️ 1. Módulo de Temporizador (Pomodoro)
-- Diseño minimalista con progreso circular.  
-- Manejo de estados: **Running**, **Paused**, **Stopped**.  
-- Retroalimentación visual inmediata.
+### 🍅 1. Ciclo Pomodoro Estricto  
+- Alternancia automática entre:
+  - **Modo Enfoque (25 min – Rojo)**  
+  - **Modo Descanso (5 min – Verde)**
+- **Bloqueo de navegación y botones** durante los descansos.
+- **Inicio forzoso del descanso** una vez registrada la tarea.
+- Evita el *burnout* obligando al usuario a pausar antes de continuar.
 
-### 💾 2. Módulo de Persistencia (SQLite)
-- Registro automático de cada sesión al finalizar.  
-- Formulario editable para ajustar la duración real.  
-- Base de datos local mediante **sqflite**.
+---
 
-### 📜 3. Historial (Bitácora)
-- Lista cronológica (**LIFO**) de sesiones.  
-- Muestra: descripción, fecha formateada y duración.  
-- Construida con **ListView**.
+### 💾 2. Registro y Persistencia (SQLite)
+- Guardado local mediante **SQLite** (sqflite).
+- Formulario obligatorio al terminar una sesión para asegurar integridad.
+- El descanso **no inicia** hasta que el usuario registre o descarte la sesión.
+- Evita pérdidas de datos y mantiene una auditoría completa.
 
-### 📊 4. Dashboard Estadístico
-- Gráficos con **fl_chart**.  
-- Agrupación semanal de datos.  
-- Muestra minutos de enfoque por día (Lun–Dom).
+---
+
+### 📳 3. Feedback Háptico (Vibración)
+- Notificación mediante el motor de vibración del dispositivo.
+- Implementado con la librería **vibration**.
+- Notifica cambio de modo sin necesidad de mirar la pantalla.
+
+---
+
+### 📜 4. Historial de Sesiones
+- Vista cronológica mediante **ListView**.
+- Implementación **LIFO**: las sesiones más recientes aparecen primero.
+- Muestra descripción, duración y fecha formateada.
+
+---
+
+### 📊 5. Dashboard Estadístico
+- Gráfico semanal creado con **fl_chart**.
+- Suma de minutos de enfoque por día de la semana (Lun–Dom).
+- Permite detectar hábitos y patrones de rendimiento.
 
 ---
 
 ## 🏛️ Arquitectura de Software
 
-El proyecto usa el patrón **MVVM** y principios de **Clean Architecture** para un código modular y escalable.
+El sistema está construido bajo el patrón **MVVM** e inspirado en principios de **Clean Architecture**, separando la lógica de negocio, la gestión de estado y la interfaz de usuario.
+
 
 ### 📂 Estructura de Carpetas
 
@@ -86,5 +112,23 @@ lib/
 
 1. **Clonar el repositorio**
 ```bash
-git clone [https://github.com/ChemmazZZ/bitacora_enfoque.git](https://github.com/ChemmazZZ/examenfinal.git)
+git clone https://github.com/ChemmazZZ/examenfinal.git
+```
 
+2. **Instalar dependencias**
+```bash 
+flutter pub get
+```
+
+3. **Ejecutar la aplicación**
+```bash
+flutter run
+```
+### 👤 Autor
+
+-José Maria Mamani Zuñiga
+-Curso: Programación para Dispositivos Móviles
+-Docente: Josue Miguel Flores Parra
+-Fecha: 06/12/2025
+-Proyecto Final – Semestre 2025-2
+   
