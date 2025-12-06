@@ -5,7 +5,7 @@ import 'package:vibration/vibration.dart';
 class TimerProvider with ChangeNotifier {
   // CONFIGURACIÓN DE TIEMPO
   static const int _workTime = 25 * 60; 
-  static const int _breakTime = 5 * 60; // 5 minutos
+  static const int _breakTime = 5 * 60;
 
   int _timeLeft = _workTime;
   Timer? _timer;
