@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/timer_provider.dart';
-import '../widgets/custom_button.dart'; // Importamos nuestro widget
+import '../widgets/custom_button.dart';// widget Reutilizable de Botones
 import 'finish_session_dialog.dart';
 import 'history_screen.dart';
+import 'statistics_screen.dart';// importamos la pantalla de gráficas
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,7 +18,20 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Bitácora de Enfoque'),
         centerTitle: true,
         actions: [
+          // botón de estadisticas 
           IconButton(
+            tooltip: "Ver Estadísticas",
+            icon: const Icon(Icons.bar_chart),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const StatisticsScreen()),
+              );
+            },
+          ),
+          //  Boton de historial
+          IconButton(
+            tooltip: "Ver Historial",
             icon: const Icon(Icons.history),
             onPressed: () {
               Navigator.push(
@@ -32,6 +46,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // circulo del Timer
             Stack(
               alignment: Alignment.center,
               children: [
@@ -53,12 +68,11 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 50),
             
-            // AQUI USAMOS NUESTRO WIDGET REUTILIZABLE
+            // botones de Control aqui se usa el widget reutilizable
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (!timerProvider.isRunning)
-                  // Botón Iniciar
                   CustomButton(
                     text: "Iniciar",
                     icon: Icons.play_arrow,
@@ -73,17 +87,15 @@ class HomeScreen extends StatelessWidget {
                     },
                   )
                 else
-                  // Botón Pausar (con color personalizado)
                   CustomButton(
                     text: "Pausar",
                     icon: Icons.pause,
-                    color: Colors.orange, // Usamos el parámetro opcional
+                    color: Colors.orange,
                     onPressed: timerProvider.stopTimer,
                   ),
                 
                 const SizedBox(width: 20),
                 
-                // Botón Reiniciar (estilo simple, usamos TextButton nativo o CustomButton si prefieres)
                 TextButton(
                   onPressed: timerProvider.resetTimer,
                   child: const Text("Reiniciar"),
@@ -94,5 +106,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-}
+  } 
+} 
