@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:vibration/vibration.dart'; // IMPORTAMOS EL PAQUETE DE VIBRACIÓN
+import 'package:vibration/vibration.dart'; 
 
 class TimerProvider with ChangeNotifier {
   // CONFIGURACIÓN DE TIEMPO
@@ -11,7 +11,7 @@ class TimerProvider with ChangeNotifier {
   Timer? _timer;
   bool _isRunning = false;
   
-  // estado de Bloqueo
+  // Estado de Bloqueo
   bool _isBreakTime = false; 
 
   int get timeLeft => _timeLeft;
@@ -24,11 +24,13 @@ class TimerProvider with ChangeNotifier {
     return "$minutes:$seconds";
   }
 
-  // METODO PRIVADO PARA VIBRAR 
+  // MÉTODO PRIVADO PARA VIBRAR 
   void _triggerVibration() async {
-    // verificamos si el dispositivo tiene vibrador para evitar errores
-    if (await Vibration.hasVibrator() ?? false) {
-      // Vibra durante 500ms, espera 500ms, vibra 500ms (doble brrrrrr)
+    // CORRECCIÓN de ??
+    final hasVibrator = await Vibration.hasVibrator();
+    
+    if (hasVibrator == true) { // Verificación segura explícita
+      // patron  de vibra 500ms, pausa 500ms, vibra 500ms
       Vibration.vibrate(pattern: [500, 1000, 500, 1000]);
     }
   }
@@ -51,7 +53,7 @@ class TimerProvider with ChangeNotifier {
     });
   }
 
-  // iniciar Descanso (Bloqueo)
+  // iniciar descanso
   void startBreak() {
     _isBreakTime = true;
     _isRunning = true; 
