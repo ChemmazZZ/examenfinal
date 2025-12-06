@@ -50,20 +50,19 @@ El proyecto usa el patrón **MVVM** y principios de **Clean Architecture** para 
 
 lib/
 ├── data/
-│ └── db_helper.dart
+│   └── db_helper.dart
 ├── models/
-│ └── session.dart
+│   └── session.dart
 ├── providers/
-│ ├── timer_provider.dart
-│ └── session_provider.dart
+│   ├── timer_provider.dart
+│   └── session_provider.dart
 ├── screens/
-│ ├── home_screen.dart
-│ ├── history_screen.dart
-│ ├── statistics_screen.dart
-│ └── finish_session_dialog.dart
+│   ├── home_screen.dart
+│   ├── history_screen.dart
+│   ├── statistics_screen.dart
+│   └── finish_session_dialog.dart
 └── widgets/
-└── custom_button.dart
-
+    └── custom_button.dart
 
 ---
 
