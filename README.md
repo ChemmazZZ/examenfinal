@@ -86,5 +86,5 @@ lib/
 
 1. **Clonar el repositorio**
 ```bash
-git clone https://github.com/TU_USUARIO/bitacora_enfoque.git
+git clone [https://github.com/ChemmazZZ/bitacora_enfoque.git](https://github.com/ChemmazZZ/examenfinal.git)
 
