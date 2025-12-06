@@ -11,7 +11,6 @@ class FinishSessionDialog extends StatefulWidget {
 }
 
 class _FinishSessionDialogState extends State<FinishSessionDialog> {
-  // controlador para leer lo que escribe el usuario
   final _controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -24,17 +23,16 @@ class _FinishSessionDialogState extends State<FinishSessionDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text("Has completado una sesion de enfoque."),
+            const Text("Has completado un Pomodoro. Registra tu tarea para iniciar el descanso."),
             const SizedBox(height: 10),
             TextFormField(
               controller: _controller,
               decoration: const InputDecoration(
-                labelText: "¿En que trabajaste?",
+                labelText: "¿En qué trabajaste?",
                 border: OutlineInputBorder(),
               ),
-              // validacion simple para que no guarden vacio
               validator: (value) =>
-                  value!.isEmpty ? "por favor escribe una descripcion" : null,
+                  value!.isEmpty ? "Por favor escribe una descripción" : null,
             ),
           ],
         ),
@@ -42,32 +40,30 @@ class _FinishSessionDialogState extends State<FinishSessionDialog> {
       actions: [
         TextButton(
           onPressed: () {
-            // si cancela, solo reiniciamos el timer
-            Provider.of<TimerProvider>(context, listen: false).resetTimer();
+            // AUNQUE DESCARTEN, EL DESCANSO ES OBLIGATORIO
             Navigator.pop(context);
+            Provider.of<TimerProvider>(context, listen: false).startBreak();
           },
           child: const Text("Descartar"),
         ),
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              // guardamos en la base de datos sqlite usando el provider
-              // le pasamos la descripcion y la duracion fija de 25 min
+              // Guardamos 25 min
               Provider.of<SessionProvider>(context, listen: false)
                   .addSession(_controller.text, 25);
               
-              // reiniciamos el reloj para la prox sesion
-              Provider.of<TimerProvider>(context, listen: false).resetTimer();
-              
               Navigator.pop(context);
               
-              // avisamos que se guardo bien
+              // INICIA EL BLOQUEO DE 5 MINUTOS
+              Provider.of<TimerProvider>(context, listen: false).startBreak();
+
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Sesion guardada exitosamente")),
+                const SnackBar(content: Text("Sesión guardada. ¡Descanso iniciado!")),
               );
             }
           },
-          child: const Text("Guardar Sesion"),
+          child: const Text("Guardar"),
         ),
       ],
     );

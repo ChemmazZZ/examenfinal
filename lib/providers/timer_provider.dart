@@ -1,44 +1,83 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart'; // IMPORTAMOS EL PAQUETE DE VIBRACIÓN
 
 class TimerProvider with ChangeNotifier {
-  // configuración inicial 25 minutos(en segs)
-  static const int _initialTime = 25 * 60; 
-  
-  int _timeLeft = _initialTime;
+  // CONFIGURACIÓN DE TIEMPO
+  static const int _workTime = 25 * 60; 
+  static const int _breakTime = 5 * 60; // 5 minutos
+
+  int _timeLeft = _workTime;
   Timer? _timer;
   bool _isRunning = false;
+  
+  // estado de Bloqueo
+  bool _isBreakTime = false; 
 
-  // getters para que la UI lea los datos
   int get timeLeft => _timeLeft;
   bool get isRunning => _isRunning;
+  bool get isBreakTime => _isBreakTime;
 
-  // convierte los segundos a texto legible "Minutos:Segs"
   String get timerString {
     final minutes = (_timeLeft / 60).floor().toString().padLeft(2, '0');
     final seconds = (_timeLeft % 60).toString().padLeft(2, '0');
     return "$minutes:$seconds";
   }
 
-  // iniciar el conteo
-  void startTimer(VoidCallback onFinished) {
-    if (_timer != null) return; // si ya corre 
-    
+  // METODO PRIVADO PARA VIBRAR 
+  void _triggerVibration() async {
+    // verificamos si el dispositivo tiene vibrador para evitar errores
+    if (await Vibration.hasVibrator() ?? false) {
+      // Vibra durante 500ms, espera 500ms, vibra 500ms (doble brrrrrr)
+      Vibration.vibrate(pattern: [500, 1000, 500, 1000]);
+    }
+  }
+
+  // iniciar Trabajo
+  void startWork(VoidCallback onFinished) {
+    if (_timer != null) return;
     _isRunning = true;
-    notifyListeners(); // avisar a la UI que cambió el estado
+    notifyListeners();
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_timeLeft > 0) {
         _timeLeft--;
-        notifyListeners(); // avisar cada segundo para actualizar el reloj
+        notifyListeners();
       } else {
         stopTimer();
-        onFinished(); // ejecutar la acción "Terminó"
+        _triggerVibration(); // VIBRA AL TERMINAR DE CHAMBEAR
+        onFinished(); 
       }
     });
   }
 
-  // pausa el conteo
+  // iniciar Descanso (Bloqueo)
+  void startBreak() {
+    _isBreakTime = true;
+    _isRunning = true; 
+    _timeLeft = _breakTime; 
+    
+    notifyListeners();
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_timeLeft > 0) {
+        _timeLeft--;
+        notifyListeners();
+      } else {
+        // FIN DEL DESCANSO
+        _timer?.cancel();
+        _timer = null;
+        _isRunning = false;
+        _isBreakTime = false; 
+        _timeLeft = _workTime;
+        
+        _triggerVibration(); // VIBRA AL TERMINAR DESCANSO
+        
+        notifyListeners();
+      }
+    });
+  }
+
   void stopTimer() {
     _timer?.cancel();
     _timer = null;
@@ -46,10 +85,10 @@ class TimerProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // reiniciar al estado original
   void resetTimer() {
     stopTimer();
-    _timeLeft = _initialTime;
+    _isBreakTime = false;
+    _timeLeft = _workTime;
     notifyListeners();
   }
 }
